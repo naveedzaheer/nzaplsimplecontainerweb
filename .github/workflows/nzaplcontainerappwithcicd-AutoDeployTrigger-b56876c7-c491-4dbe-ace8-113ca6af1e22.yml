@@ -37,7 +37,6 @@ jobs:
           push: true
           tags: nzaplcontainerapp20221213161739.azurecr.io/nzaplcontainerappwithcicd:${{ github.sha }}
           file: ./nzaplsimplecontainerweb/Dockerfile
-          context: ./nzaplsimplecontainerweb/
 
 
   deploy:
