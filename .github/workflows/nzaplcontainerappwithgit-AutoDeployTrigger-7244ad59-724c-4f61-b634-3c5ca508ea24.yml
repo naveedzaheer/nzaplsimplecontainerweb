@@ -36,7 +36,7 @@ jobs:
         with:
           push: true
           tags: nzaplcontainerapp20221213161739.azurecr.io/nzaplcontainerappwithgit:${{ github.sha }}
-          file: ./Dockerfile
+          file: Dockerfile
 
 
   deploy:
