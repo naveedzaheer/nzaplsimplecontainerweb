@@ -53,7 +53,12 @@ jobs:
       - name: Deploy to containerapp
         uses: azure/CLI@v1
         with:
-          inlineScript: |
+          inlineScript: |           
+            sudo apt-get remove azure-cli
+            curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+            echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+            sudo apt-get update
+            sudo apt-get install azure-cli
             az config set extension.use_dynamic_install=yes_without_prompt
             az containerapp registry set -n nzaplcontainerappwithcicd -g nzaplcontainerapps-rg --server nzaplcontainerapp20221213161739.azurecr.io --username  ${{ secrets.NZAPLCONTAINERAPPWITHCICD_REGISTRY_USERNAME }} --password ${{ secrets.NZAPLCONTAINERAPPWITHCICD_REGISTRY_PASSWORD }}
             az containerapp update -n nzaplcontainerappwithcicd -g nzaplcontainerapps-rg --image nzaplcontainerapp20221213161739.azurecr.io/nzaplcontainerappwithcicd:${{ github.sha }}
